@@ -46,6 +46,14 @@ export const AppProvider = ({ children }: { children: JSX.Element }) => {
 				tickets: [...prevState.tickets.filter((i) => i.id !== id)],
 			};
 		});
+
+		toast({
+			title: 'Ticket removed',
+			description: 'Your ticket has been removed',
+			status: 'success',
+			duration: 5000,
+			isClosable: true,
+		});
 	};
 
 	const saveTicket = (id: string, title: string, category: string) => {
@@ -78,6 +86,14 @@ export const AppProvider = ({ children }: { children: JSX.Element }) => {
 				],
 			};
 		});
+
+		toast({
+			title: 'Ticket updated',
+			description: 'Your ticket has been updated',
+			status: 'success',
+			duration: 5000,
+			isClosable: true,
+		});
 	};
 
 	const addTicket = (title: string, category: string) => {
@@ -93,6 +109,14 @@ export const AppProvider = ({ children }: { children: JSX.Element }) => {
 			return {
 				...prevState,
 			};
+		});
+
+		toast({
+			title: 'New ticket added',
+			description: 'Your new ticket has been added',
+			status: 'success',
+			duration: 5000,
+			isClosable: true,
 		});
 	};
 
@@ -110,6 +134,14 @@ export const AppProvider = ({ children }: { children: JSX.Element }) => {
 					...prevState,
 					tickets: [...prevState.tickets.filter((i) => i.id !== id), newState],
 				};
+			});
+
+			toast({
+				title: 'Vote saved',
+				description: 'Your new vote has been saved',
+				status: 'success',
+				duration: 5000,
+				isClosable: true,
 			});
 		} else {
 			// show message after 2 votes has reached
