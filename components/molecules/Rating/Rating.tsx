@@ -3,12 +3,20 @@ import { StarIcon } from '@chakra-ui/icons';
 import { IRating } from '@/components/molecules/Rating/types';
 import { Flex, Stack } from '@chakra-ui/react';
 import React, { useState } from 'react';
+import { useApp } from '../../../context/app';
 
-const Rating: React.FC<IRating> = ({ rating }) => {
+const Rating: React.FC<IRating> = ({ rating, draggableId }) => {
+	const { saveRating } = useApp();
+
 	const [selectedRating, setSelectedRating] = useState(rating);
 
 	const onClick = (i) => {
-		console.log(i);
+		// first click is 1 star second click is removing vote
+		if (i === 0 && rating === 1) {
+			saveRating(0, draggableId);
+		} else {
+			saveRating(i + 1, draggableId);
+		}
 	};
 
 	return (

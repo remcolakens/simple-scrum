@@ -7,18 +7,34 @@ interface IAppContext {
 	columns: IColumns[];
 	tickets: ITickets[];
 	onDragEndHandler: (result: DropResult) => unknown;
+	saveRating: (rating: number, id: string) => unknown;
 }
 
 const defaultState = {
 	columns: null,
 	tickets: null,
 	onDragEndHandler: () => undefined,
+	saveRating: () => undefined,
 };
 
 const AppContext = createContext<IAppContext>(defaultState);
 
 export const AppProvider = ({ children }: { children: JSX.Element }) => {
 	const [items, setItems] = useState({ ...data });
+
+	const saveRating = (rating, id) => {
+		setItems((prevState) => {
+			const newState = {
+				...prevState.tickets.find((i) => i.id === id),
+				rating: rating,
+			};
+
+			return {
+				...prevState,
+				tickets: [...prevState.tickets.filter((i) => i.id !== id), newState],
+			};
+		});
+	};
 
 	const onDragEndHandler = (result: DropResult) => {
 		const { source, destination, draggableId } = result;
@@ -103,6 +119,7 @@ export const AppProvider = ({ children }: { children: JSX.Element }) => {
 				columns: columns as IColumns[],
 				tickets: tickets as ITickets[],
 				onDragEndHandler: onDragEndHandler,
+				saveRating: saveRating,
 			}}
 		>
 			{children}

@@ -27,7 +27,7 @@ const DropContainer: React.FC<IDropContainer> = ({ id, title, tickets }) => (
 								>
 									<Text>{title}</Text>
 
-									<Rating rating={rating} />
+									<Rating rating={rating} draggableId={id} />
 								</Box>
 							)}
 						</Draggable>
