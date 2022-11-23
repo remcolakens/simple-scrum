@@ -1,3 +1,4 @@
+import Rating from '@/components/molecules/Rating/Rating';
 import { IDropContainer } from '@/components/organisms/DropContainer/types';
 import { Box, Flex, GridItem, Heading, Text } from '@chakra-ui/react';
 import React from 'react';
@@ -11,7 +12,7 @@ const DropContainer: React.FC<IDropContainer> = ({ id, title, tickets }) => (
 		<Droppable droppableId={id}>
 			{({ innerRef, placeholder }) => (
 				<Flex ref={innerRef} direction="column" style={{ height: '100%' }}>
-					{tickets.map(({ id, title }, index) => (
+					{tickets.map(({ id, title, rating }, index) => (
 						<Draggable key={id} draggableId={id} index={index}>
 							{({ draggableProps, dragHandleProps, innerRef }) => (
 								<Box
@@ -25,6 +26,8 @@ const DropContainer: React.FC<IDropContainer> = ({ id, title, tickets }) => (
 									{...dragHandleProps}
 								>
 									<Text>{title}</Text>
+
+									<Rating rating={rating} />
 								</Box>
 							)}
 						</Draggable>
