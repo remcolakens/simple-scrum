@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 import { DropResult } from 'react-beautiful-dnd';
+import { v4 as uuidv4 } from 'uuid';
 import { data } from '../data';
 import { IColumns, ITickets } from '../types/global';
 
@@ -8,6 +9,7 @@ interface IAppContext {
 	tickets: ITickets[];
 	onDragEndHandler: (result: DropResult) => unknown;
 	saveRating: (rating: number, id: string) => unknown;
+	addTicket: (title: string, category: string) => unknown;
 }
 
 const defaultState = {
@@ -15,12 +17,29 @@ const defaultState = {
 	tickets: null,
 	onDragEndHandler: () => undefined,
 	saveRating: () => undefined,
+	addTicket: () => undefined,
 };
 
 const AppContext = createContext<IAppContext>(defaultState);
 
 export const AppProvider = ({ children }: { children: JSX.Element }) => {
 	const [items, setItems] = useState({ ...data });
+
+	const addTicket = (title, category) => {
+		setItems((prevState) => {
+			const id = uuidv4();
+			prevState.columns.find((c) => c.id === category).ticketId.push(id);
+			prevState.tickets.push({
+				id: id,
+				title: title,
+				rating: 0,
+			});
+
+			return {
+				...prevState,
+			};
+		});
+	};
 
 	const saveRating = (rating, id) => {
 		setItems((prevState) => {
@@ -120,6 +139,7 @@ export const AppProvider = ({ children }: { children: JSX.Element }) => {
 				tickets: tickets as ITickets[],
 				onDragEndHandler: onDragEndHandler,
 				saveRating: saveRating,
+				addTicket: addTicket,
 			}}
 		>
 			{children}

@@ -1,5 +1,6 @@
+import AddTicket from '@/components/organisms/AddTicket/AddTicket';
 import DropContainer from '@/components/organisms/DropContainer/DropContainer';
-import { Container, Grid } from '@chakra-ui/react';
+import { Container, Flex, Grid } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useApp } from '../context/app';
@@ -17,6 +18,10 @@ export const Home: React.FC = () => {
 	if (!SSR) {
 		return (
 			<Container maxW="container.lg">
+				<Flex flexDirection="row-reverse" my={5}>
+					<AddTicket />
+				</Flex>
+
 				<DragDropContext onDragEnd={onDragEndHandler}>
 					<Grid templateColumns="repeat(4, 1fr)" gap={5}>
 						{columns.map(({ id, title, ticketId }) => (
