@@ -11,7 +11,7 @@ const DropContainer: React.FC<IDropContainer> = ({ id, title, tickets }) => (
 			{title}
 		</Heading>
 
-		<GridItem bg="gray.100" p={5} flexBasis={1} h="100%">
+		<GridItem bg="gray.100" p={5} flexBasis={1} h="100%" overflowY="auto">
 			<Droppable droppableId={id}>
 				{({ innerRef, placeholder }) => (
 					<Flex ref={innerRef} direction="column" style={{ height: '100%' }}>

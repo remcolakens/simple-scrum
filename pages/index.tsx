@@ -1,6 +1,6 @@
 import AddTicket from '@/components/organisms/AddTicket/AddTicket';
 import DropContainer from '@/components/organisms/DropContainer/DropContainer';
-import { Container, Flex, Grid } from '@chakra-ui/react';
+import { Container, Divider, Flex, Grid, Heading } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useApp } from '../context/app';
@@ -18,8 +18,12 @@ export const Home: React.FC = () => {
 	if (!SSR) {
 		return (
 			<Container maxW="container.xl">
-				<Flex flexDirection="row-reverse" my={5}>
-					<AddTicket />
+				<Flex flexDirection="column" alignItems="flex-end" my={5}>
+					<Flex alignItems="center" justifyContent="space-between" w="100%">
+						<Heading size="lg">Simple Scrum Board</Heading>
+						<AddTicket />
+					</Flex>
+					<Divider mt={5} />
 				</Flex>
 
 				<DragDropContext onDragEnd={onDragEndHandler}>

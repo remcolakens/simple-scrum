@@ -27,8 +27,8 @@ const Rating: React.FC<IRating> = ({ rating, draggableId }) => {
 					as="button"
 					height="18px"
 					width="18px"
-					color={i < selectedRating ? 'teal.500' : 'gray.300'}
-					_hover={{ color: 'teal.500' }}
+					color={i < selectedRating ? 'blue.400' : 'gray.300'}
+					_hover={{ color: 'blue.400' }}
 					onMouseEnter={() => setSelectedRating(i)}
 					onMouseLeave={() => setSelectedRating(rating)}
 					onClick={() => onClick(i)}
