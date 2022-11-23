@@ -1,5 +1,6 @@
 import Rating from '@/components/molecules/Rating/Rating';
 import { IDropContainer } from '@/components/organisms/DropContainer/types';
+import EditTicket from '@/components/organisms/EditTicket/EditTicket';
 import { Box, Flex, GridItem, Heading, Text } from '@chakra-ui/react';
 import React from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
@@ -27,7 +28,11 @@ const DropContainer: React.FC<IDropContainer> = ({ id, title, tickets }) => (
 								>
 									<Text>{title}</Text>
 
-									<Rating rating={rating} draggableId={id} />
+									<Flex alignItems="center" justifyContent="space-between">
+										<Rating rating={rating} draggableId={id} />
+
+										<EditTicket ticketId={id} />
+									</Flex>
 								</Box>
 							)}
 						</Draggable>

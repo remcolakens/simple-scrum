@@ -10,6 +10,7 @@ interface IAppContext {
 	onDragEndHandler: (result: DropResult) => unknown;
 	saveRating: (rating: number, id: string) => unknown;
 	addTicket: (title: string, category: string) => unknown;
+	saveTicket: (id: string, title: string, category: string) => unknown;
 }
 
 const defaultState = {
@@ -18,12 +19,45 @@ const defaultState = {
 	onDragEndHandler: () => undefined,
 	saveRating: () => undefined,
 	addTicket: () => undefined,
+	saveTicket: () => undefined,
 };
 
 const AppContext = createContext<IAppContext>(defaultState);
 
 export const AppProvider = ({ children }: { children: JSX.Element }) => {
 	const [items, setItems] = useState({ ...data });
+
+	const saveTicket = (id, title, category) => {
+		setItems((prevState) => {
+			// find current ticket in one of the four "columns"
+			const sourceIds = prevState.columns.filter((col) =>
+				col.ticketId.includes(id)
+			)[0].ticketId;
+
+			// find "array index" of current ticket
+			const sourceIndex = sourceIds.indexOf(id);
+
+			// delete this ticket
+			sourceIds.splice(sourceIndex, 1);
+
+			// add id to new selected category
+			prevState.columns
+				.filter((col) => col.id === category)[0]
+				.ticketId.push(id);
+
+			return {
+				...prevState,
+				// update the title of the ticket while keeping rest of the data intact
+				tickets: [
+					...prevState.tickets.filter((i) => i.id !== id),
+					{
+						...prevState.tickets.find((i) => i.id === id),
+						title: title,
+					},
+				],
+			};
+		});
+	};
 
 	const addTicket = (title, category) => {
 		setItems((prevState) => {
@@ -140,6 +174,7 @@ export const AppProvider = ({ children }: { children: JSX.Element }) => {
 				onDragEndHandler: onDragEndHandler,
 				saveRating: saveRating,
 				addTicket: addTicket,
+				saveTicket: saveTicket,
 			}}
 		>
 			{children}
