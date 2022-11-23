@@ -1,7 +1,7 @@
 {
-	"name": "next-boilerplate",
-	"version": "1.5.10",
-	"description": "Easy to use front-end boilerplate to start developing your Next.js application right away",
+	"name": "simple-scrum",
+	"version": "1.0.0",
+	"description": "Just a simple scrum board",
 	"scripts": {
 		"dev": "next dev",
 		"build": "next build",
@@ -17,7 +17,7 @@
 		"release": "release-it",
 		"prepare": "husky install"
 	},
-	"repository": "https://github.com/remcolakens/next-boilerplate",
+	"repository": "https://github.com/remcolakens/simple-scrum",
 	"author": "Remco Lakens",
 	"license": "MIT",
 	"devDependencies": {
