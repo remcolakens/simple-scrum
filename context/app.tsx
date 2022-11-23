@@ -1,8 +1,9 @@
+import { useToast } from '@chakra-ui/react';
 import { createContext, useContext, useState } from 'react';
 import { DropResult } from 'react-beautiful-dnd';
 import { v4 as uuidv4 } from 'uuid';
 import { data } from '../data';
-import { IColumns, ITickets } from '../types/global';
+import { IColumns, IData, ITickets } from '../types/global';
 
 interface IAppContext {
 	columns: IColumns[];
@@ -27,7 +28,9 @@ const defaultState = {
 const AppContext = createContext<IAppContext>(defaultState);
 
 export const AppProvider = ({ children }: { children: JSX.Element }) => {
-	const [items, setItems] = useState({ ...data });
+	const toast = useToast();
+	const [items, setItems] = useState<IData>({ ...data });
+	const [votes, setVotes] = useState<string[]>([]);
 
 	const deleteTicket = (id: string) => {
 		setItems((prevState) => {
@@ -94,17 +97,30 @@ export const AppProvider = ({ children }: { children: JSX.Element }) => {
 	};
 
 	const saveRating = (rating: number, id: string) => {
-		setItems((prevState) => {
-			const newState = {
-				...prevState.tickets.find((i) => i.id === id),
-				rating: rating,
-			};
+		if (votes.length < 2 || votes.includes(id)) {
+			!votes.includes(id) && setVotes([...votes, id]);
 
-			return {
-				...prevState,
-				tickets: [...prevState.tickets.filter((i) => i.id !== id), newState],
-			};
-		});
+			setItems((prevState) => {
+				const newState = {
+					...prevState.tickets.find((i) => i.id === id),
+					rating: rating,
+				};
+
+				return {
+					...prevState,
+					tickets: [...prevState.tickets.filter((i) => i.id !== id), newState],
+				};
+			});
+		} else {
+			// show message after 2 votes has reached
+			toast({
+				title: 'Maximum votes reached',
+				description: "Sorry you've reached the maximum amount of votes",
+				status: 'error',
+				duration: 5000,
+				isClosable: true,
+			});
+		}
 	};
 
 	const onDragEndHandler = (result: DropResult) => {
