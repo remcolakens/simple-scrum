@@ -6,7 +6,7 @@ export const global = css`
 		margin: 0;
 		padding: 0;
 		box-sizing: border-box;
-		overflow-x: hidden;
+		overflow: hidden;
 
 		//font-size: 20px; // root font-size since we are using REMs
 	}

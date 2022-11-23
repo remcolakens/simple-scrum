@@ -9,9 +9,13 @@ import {
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import { data } from '../data';
 
 export const Home: React.FC = () => {
 	const [SSR, setSSR] = useState(true);
+	const [items] = useState({ ...data });
+
+	console.log(items);
 
 	useEffect(() => {
 		setSSR(false);
