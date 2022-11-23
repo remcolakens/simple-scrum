@@ -1,10 +1,15 @@
 import { primaryTheme } from '@/styles/themes';
 import { ChakraProvider } from '@chakra-ui/react';
 import { render } from '@testing-library/react';
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
+import { AppProvider } from '../../context/app';
 
-function CustomWrapper({ children }: { children: React.ReactNode }) {
-	return <ChakraProvider theme={primaryTheme}>{children}</ChakraProvider>;
+function CustomWrapper({ children }: { children: JSX.Element }) {
+	return (
+		<ChakraProvider theme={primaryTheme}>
+			<AppProvider>{children}</AppProvider>
+		</ChakraProvider>
+	);
 }
 
 export function renderWithChakra(
