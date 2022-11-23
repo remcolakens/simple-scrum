@@ -31,18 +31,19 @@ yarn build
 ## My approach
 
 - [x] Define architecture + plugins
-- [ ] Add simple UI
-- [ ] Apply drag n drop feature
-- [ ] Build JSON data file
-- [ ] Use context for storage
-- [ ] Add CRUD operations
-- [ ] Design tweaks + Bugfixes
+- [x] Add simple UI
+- [x] Apply drag n drop feature
+- [x] Build JSON data file
+- [x] Use context for storage
+- [x] Add CRUD operations
+- [x] Design tweaks + Bugfixes
 
 ## Learn More
 
 To learn more about Next.js and the other tools, take a look at the following resources:
 
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Chakra UI](https://chakra-ui.com/) - Chakra UI is a simple, modular and accessible component library that gives you the building blocks you need to build your React applications.
 - [Typescript](https://www.typescriptlang.org/docs) - Introduction to TypeScript
 - [Emotion](https://emotion.sh/docs) - Use the best bits of ES6 and CSS to style your apps without stress
 - [Eslint](https://eslint.org/docs/user-guide) - Find and fix problems in your JavaScript code.
