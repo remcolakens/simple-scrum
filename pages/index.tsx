@@ -23,7 +23,7 @@ export const Home: React.FC = () => {
 						<Heading size="lg">Simple Scrum Board</Heading>
 						<AddTicket />
 					</Flex>
-					<Divider mt={5} />
+					<Divider my={5} />
 				</Flex>
 
 				<DragDropContext onDragEnd={onDragEndHandler}>
