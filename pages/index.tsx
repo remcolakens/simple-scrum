@@ -17,13 +17,17 @@ export const Home: React.FC = () => {
 
 	if (!SSR) {
 		return (
-			<Container maxW="container.lg">
+			<Container maxW="container.xl">
 				<Flex flexDirection="row-reverse" my={5}>
 					<AddTicket />
 				</Flex>
 
 				<DragDropContext onDragEnd={onDragEndHandler}>
-					<Grid templateColumns="repeat(4, 1fr)" gap={5}>
+					<Grid
+						templateColumns="repeat(4, 1fr)"
+						templateRows="repeat(4, 80vh)"
+						gap={2}
+					>
 						{columns.map(({ id, title, ticketId }) => (
 							<DropContainer
 								id={id}
