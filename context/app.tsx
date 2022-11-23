@@ -11,6 +11,7 @@ interface IAppContext {
 	saveRating: (rating: number, id: string) => unknown;
 	addTicket: (title: string, category: string) => unknown;
 	saveTicket: (id: string, title: string, category: string) => unknown;
+	deleteTicket: (id: string) => unknown;
 }
 
 const defaultState = {
@@ -20,6 +21,7 @@ const defaultState = {
 	saveRating: () => undefined,
 	addTicket: () => undefined,
 	saveTicket: () => undefined,
+	deleteTicket: () => undefined,
 };
 
 const AppContext = createContext<IAppContext>(defaultState);
@@ -27,7 +29,23 @@ const AppContext = createContext<IAppContext>(defaultState);
 export const AppProvider = ({ children }: { children: JSX.Element }) => {
 	const [items, setItems] = useState({ ...data });
 
-	const saveTicket = (id, title, category) => {
+	const deleteTicket = (id: string) => {
+		setItems((prevState) => {
+			// logic similar to save ticket
+			const sourceIds = prevState.columns.filter((col) =>
+				col.ticketId.includes(id)
+			)[0].ticketId;
+			const sourceIndex = sourceIds.indexOf(id);
+			sourceIds.splice(sourceIndex, 1);
+
+			return {
+				...prevState,
+				tickets: [...prevState.tickets.filter((i) => i.id !== id)],
+			};
+		});
+	};
+
+	const saveTicket = (id: string, title: string, category: string) => {
 		setItems((prevState) => {
 			// find current ticket in one of the four "columns"
 			const sourceIds = prevState.columns.filter((col) =>
@@ -59,7 +77,7 @@ export const AppProvider = ({ children }: { children: JSX.Element }) => {
 		});
 	};
 
-	const addTicket = (title, category) => {
+	const addTicket = (title: string, category: string) => {
 		setItems((prevState) => {
 			const id = uuidv4();
 			prevState.columns.find((c) => c.id === category).ticketId.push(id);
@@ -75,7 +93,7 @@ export const AppProvider = ({ children }: { children: JSX.Element }) => {
 		});
 	};
 
-	const saveRating = (rating, id) => {
+	const saveRating = (rating: number, id: string) => {
 		setItems((prevState) => {
 			const newState = {
 				...prevState.tickets.find((i) => i.id === id),
@@ -175,6 +193,7 @@ export const AppProvider = ({ children }: { children: JSX.Element }) => {
 				saveRating: saveRating,
 				addTicket: addTicket,
 				saveTicket: saveTicket,
+				deleteTicket: deleteTicket,
 			}}
 		>
 			{children}

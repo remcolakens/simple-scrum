@@ -12,6 +12,7 @@ import {
 	ModalHeader,
 	ModalOverlay,
 	Select,
+	Spacer,
 	Text,
 	useDisclosure,
 } from '@chakra-ui/react';
@@ -35,7 +36,7 @@ const EditTicket: React.FC<IEditTicket> = ({ ticketId }) => {
 	});
 
 	const { isOpen, onOpen, onClose } = useDisclosure();
-	const { saveTicket } = useApp();
+	const { saveTicket, deleteTicket } = useApp();
 
 	const onSubmit = (data) => {
 		// split data to variables
@@ -45,6 +46,11 @@ const EditTicket: React.FC<IEditTicket> = ({ ticketId }) => {
 		saveTicket(ticketId, title, category);
 
 		//close modal
+		onClose();
+	};
+
+	const handleDelete = () => {
+		deleteTicket(ticketId);
 		onClose();
 	};
 
@@ -85,6 +91,10 @@ const EditTicket: React.FC<IEditTicket> = ({ ticketId }) => {
 						</ModalBody>
 
 						<ModalFooter>
+							<Button colorScheme="red" mr={3} onClick={handleDelete}>
+								Delete
+							</Button>
+							<Spacer />
 							<Button colorScheme="blue" mr={3} type="submit">
 								Save
 							</Button>
