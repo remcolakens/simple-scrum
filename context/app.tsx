@@ -1,5 +1,5 @@
 import { useToast } from '@chakra-ui/react';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { DropResult } from 'react-beautiful-dnd';
 import { v4 as uuidv4 } from 'uuid';
 import { data } from '../data';
@@ -29,8 +29,19 @@ const AppContext = createContext<IAppContext>(defaultState);
 
 export const AppProvider = ({ children }: { children: JSX.Element }) => {
 	const toast = useToast();
-	const [items, setItems] = useState<IData>({ ...data });
+	const [items, setItems] = useState<IData>();
 	const [votes, setVotes] = useState<string[]>([]);
+
+	// check for items in localStorage otherwise load default dataSet
+	useEffect(() => {
+		const storageItems = JSON.parse(localStorage.getItem('items'));
+		storageItems ? setItems(storageItems) : setItems({ ...data });
+	}, []);
+
+	// when items are being updated save to localStorage
+	useEffect(() => {
+		items && localStorage.setItem('items', JSON.stringify(items));
+	}, [items]);
 
 	const deleteTicket = (id: string) => {
 		setItems((prevState) => {
@@ -230,13 +241,11 @@ export const AppProvider = ({ children }: { children: JSX.Element }) => {
 		}
 	};
 
-	const { columns, tickets } = items;
-
 	return (
 		<AppContext.Provider
 			value={{
-				columns: columns as IColumns[],
-				tickets: tickets as ITickets[],
+				columns: items?.columns as IColumns[],
+				tickets: items?.tickets as ITickets[],
 				onDragEndHandler: onDragEndHandler,
 				saveRating: saveRating,
 				addTicket: addTicket,

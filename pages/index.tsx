@@ -1,7 +1,8 @@
+import Loader from '@/components/molecules/Loader/Loader';
 import AddTicket from '@/components/organisms/AddTicket/AddTicket';
 import DropContainer from '@/components/organisms/DropContainer/DropContainer';
 import { Container, Divider, Flex, Grid, Heading } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useApp } from '../context/app';
 import { ITickets } from '../types/global';
@@ -9,13 +10,7 @@ import { ITickets } from '../types/global';
 export const Home: React.FC = () => {
 	const { onDragEndHandler, columns, tickets } = useApp();
 
-	const [SSR, setSSR] = useState(true);
-
-	useEffect(() => {
-		setSSR(false);
-	}, []);
-
-	if (!SSR) {
+	if (columns && tickets) {
 		return (
 			<Container maxW="container.xl">
 				<Flex flexDirection="column" alignItems="flex-end" my={5}>
@@ -48,7 +43,7 @@ export const Home: React.FC = () => {
 		);
 	}
 
-	return null;
+	return <Loader />;
 };
 
 export default Home;
