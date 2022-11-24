@@ -6,47 +6,53 @@ import React from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 
 const DropContainer: React.FC<IDropContainer> = ({ id, title, tickets }) => (
-	<Box>
-		<Heading size="md" mb={4} textAlign="center">
-			{title}
-		</Heading>
+	<GridItem bg="gray.100" h="100%">
+		<Box bg="white">
+			<Heading size="md" pb={5} textAlign="center">
+				{title}
+			</Heading>
+		</Box>
 
-		<GridItem bg="gray.100" p={5} flexBasis={1} h="100%" overflowY="auto">
-			<Droppable droppableId={id}>
-				{({ innerRef, placeholder }) => (
-					<Flex ref={innerRef} direction="column" style={{ height: '100%' }}>
-						{tickets.map(({ id, title, rating }, index) => (
-							<Draggable key={id} draggableId={id} index={index}>
-								{({ draggableProps, dragHandleProps, innerRef }) => (
-									<Box
-										p={4}
-										my={2}
-										border="1px"
-										borderColor="gray.300"
-										borderRadius="4px"
-										boxShadow="md"
-										bg="white"
-										ref={innerRef}
-										{...draggableProps}
-										{...dragHandleProps}
-									>
+		<Droppable droppableId={id}>
+			{({ innerRef, placeholder }) => (
+				<Flex
+					ref={innerRef}
+					direction="column"
+					p={5}
+					minH={{ base: '40vh', lg: '100vh' }}
+				>
+					{tickets.map(({ id, title, rating }, index) => (
+						<Draggable key={id} draggableId={id} index={index}>
+							{({ draggableProps, dragHandleProps, innerRef }) => (
+								<Flex
+									p={4}
+									my={2}
+									borderRadius={4}
+									bg="white"
+									border="1px"
+									borderColor="gray.300"
+									boxShadow="md"
+									ref={innerRef}
+									{...draggableProps}
+									{...dragHandleProps}
+								>
+									<Flex flexGrow="3" flexDirection="column">
 										<Text>{title}</Text>
+										<Rating rating={rating} draggableId={id} />
+									</Flex>
 
-										<Flex alignItems="center" justifyContent="space-between">
-											<Rating rating={rating} draggableId={id} />
-
-											<EditTicket ticketId={id} />
-										</Flex>
-									</Box>
-								)}
-							</Draggable>
-						))}
-						{placeholder}
-					</Flex>
-				)}
-			</Droppable>
-		</GridItem>
-	</Box>
+									<Flex alignItems="center">
+										<EditTicket ticketId={id} />
+									</Flex>
+								</Flex>
+							)}
+						</Draggable>
+					))}
+					{placeholder}
+				</Flex>
+			)}
+		</Droppable>
+	</GridItem>
 );
 
 export default DropContainer;

@@ -1,8 +1,11 @@
 import { IEditTicket } from '@/components/organisms/EditTicket/types';
+import { EditIcon } from '@chakra-ui/icons';
 import {
 	Button,
+	ButtonGroup,
 	FormControl,
 	FormLabel,
+	IconButton,
 	Input,
 	Modal,
 	ModalBody,
@@ -13,7 +16,6 @@ import {
 	ModalOverlay,
 	Select,
 	Spacer,
-	Text,
 	useDisclosure,
 } from '@chakra-ui/react';
 import React from 'react';
@@ -56,13 +58,13 @@ const EditTicket: React.FC<IEditTicket> = ({ ticketId }) => {
 
 	return (
 		<>
-			<Button onClick={onOpen} variant="link" colorScheme="blue">
-				<Text fontSize="xs">(edit)</Text>
-			</Button>
+			<ButtonGroup onClick={onOpen} size="sm" isAttached variant="ghost">
+				<IconButton aria-label="Edit ticket" icon={<EditIcon />} />
+			</ButtonGroup>
 
 			<Modal isOpen={isOpen} onClose={onClose}>
 				<ModalOverlay />
-				<ModalContent>
+				<ModalContent mx={5}>
 					<ModalHeader>Edit ticket</ModalHeader>
 					<ModalCloseButton />
 

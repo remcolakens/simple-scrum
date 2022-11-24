@@ -20,7 +20,7 @@ const Rating: React.FC<IRating> = ({ rating, draggableId }) => {
 	};
 
 	return (
-		<Stack isInline my={3}>
+		<Stack isInline mt={3}>
 			{Array.from({ length: 5 }, (_, i) => (
 				<Flex
 					key={i}

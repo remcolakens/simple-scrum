@@ -43,13 +43,13 @@ const AddTicket: React.FC = () => {
 
 	return (
 		<>
-			<Button onClick={onOpen} colorScheme="blue">
+			<Button onClick={onOpen} colorScheme="blue" size="md">
 				Add new ticket
 			</Button>
 
 			<Modal isOpen={isOpen} onClose={onClose}>
 				<ModalOverlay />
-				<ModalContent>
+				<ModalContent mx={5}>
 					<ModalHeader>Add new ticket</ModalHeader>
 					<ModalCloseButton />
 
@@ -57,10 +57,7 @@ const AddTicket: React.FC = () => {
 						<ModalBody>
 							<FormControl isRequired isInvalid={!!errors.title}>
 								<FormLabel>Title</FormLabel>
-								<Input
-									placeholder="Title"
-									{...register('title', { required: true })}
-								/>
+								<Input {...register('title', { required: true })} />
 							</FormControl>
 
 							<FormControl mt={3} isRequired isInvalid={!!errors.category}>

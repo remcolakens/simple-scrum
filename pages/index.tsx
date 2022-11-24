@@ -14,18 +14,29 @@ export const Home: React.FC = () => {
 		return (
 			<Container maxW="container.xl">
 				<Flex flexDirection="column" alignItems="flex-end" my={5}>
-					<Flex alignItems="center" justifyContent="space-between" w="100%">
-						<Heading size="lg">Simple Scrum Board</Heading>
+					<Flex
+						alignItems="center"
+						justifyContent="space-between"
+						w="100%"
+						flexDirection={{ base: 'column', md: 'row' }}
+					>
+						<Heading size="lg" mb={{ base: 5, md: 0 }}>
+							Simple Scrum Board
+						</Heading>
 						<AddTicket />
 					</Flex>
-					<Divider my={5} />
 				</Flex>
+				<Divider />
 
 				<DragDropContext onDragEnd={onDragEndHandler}>
 					<Grid
-						templateColumns="repeat(4, 1fr)"
-						templateRows="repeat(4, 80vh)"
-						gap={2}
+						templateColumns={{
+							base: 'repeat(1, 1fr)',
+							md: 'repeat(2, 1fr)',
+							lg: 'repeat(4, 1fr)',
+						}}
+						gap={{ base: 5, lg: 3 }}
+						py={5}
 					>
 						{columns.map(({ id, title, ticketId }) => (
 							<DropContainer
